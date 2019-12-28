@@ -1,15 +1,34 @@
-const mongoose = require('mongoose');
+var mongoose = require("mongoose");
 
-let Schema = mongoose.Schema;
-let CommentSchema = new Schema({
-    _storyId: {
-        type: Schema.Types.ObjectId,
-        required: true,
-        ref: 'Story'
+
+var Schema = mongoose.Schema;
+
+var ArticleSchema = new Schema ({
+    headline: {
+        type: String,
+        required: true
     },
-    body: String
+    summaryOne: {
+        type: String,
+        required: true
+    },
+    summaryTwo: {
+        type: String,
+        required: false
+    },
+    link: {
+        type: String,
+        required: true
+    },
+    saved: {
+        type: Boolean,
+        default: false
+    },
+    note: 
+        []
+    
 });
 
-let Comment = mongoose.model("Comment", CommentSchema);
+var Article = mongoose.model("Article", ArticleSchema);
 
-module.exports = Comment;
+module.exports = Article;

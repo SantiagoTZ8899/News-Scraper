@@ -2,7 +2,7 @@ let db = require("../models");
 
 module.exports = function (router) {
     // route to get comments for a story
-    router.get("/api/storyComments/:id", function(req, res) {
+    router.get("/api/storyComment/:id", function(req, res) {
         db.Comment.find({_storyId: req.params.id})
             .then(function(dbComments) {
                 res.json(dbComments)

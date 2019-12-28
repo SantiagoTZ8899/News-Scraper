@@ -12,8 +12,10 @@ module.exports = function (router) {
 
             let $ = cheerio.load(response.data);
             let storyCount = 0;
-            $("div.PromoSmall-content").each(function(i, element) {
+            $("div.PromoSmall-content").each(function() {
+               
                 let result = {};
+                console.log(result)
                 storyCount++;
                 if (storyCount > 20) {
                     return false;
@@ -28,10 +30,10 @@ module.exports = function (router) {
                 // let storyDate = $(element).find('h3.jsx-1350539171 item-data').attr('data-timeago');
                 // console.log(storyDate);
 
-                var headline = $(element).find('div.PromoSmall-title a').text();
-                var summary = $(element).find('div.PromoSmall-description').text();
-                var link = $(element).find('div.PromoSmall-title a').attr('href');
-                var storyDate = $(element).find('div.PromoSmall-timestamp').attr('data-date');
+                // var headline = $(element).find('div.PromoSmall-title a').text();
+                // var summary = $(element).find('div.PromoSmall-description').text();
+                // var link = $(element).find('div.PromoSmall-title a').attr('href');
+                // var storyDate = $(element).find('div.PromoSmall-timestamp').attr('data-date');
 
                 if (headline && summary && link && storyDate) {
                     result.headline = headline;

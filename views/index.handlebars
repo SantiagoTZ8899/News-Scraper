@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12" id="titleDiv">
-            <h1 id="title"> N.Y.Times Scraper</h1>
+            <h1 id="title">N.Y.Times Scraper</h1>
         </div>
     </div>
     <div class="row" class="linkRow">
@@ -50,6 +50,9 @@
     $(document).ready(function () {
         $("#scrapeBtn").on("click", function (event) {
             event.preventDefault();
+
+                        console.log("something");
+                        
             $.get("/newscrape", function (data) {
                 location.reload();
             });

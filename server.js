@@ -36,7 +36,7 @@ app.get("/", function (req, res) {
 
 // scraping the info from the website
 app.get("/newscrape", function (req, res) {
-    axios.get("https://www.nytimes.com/").then(function (response) {
+    axios.get("https://www.nytimes.com").then(function (response) {
         var $ = cheerio.load(response.data)
         $("h2 span").each(function (i, element) {
             var headline = $(element).text();

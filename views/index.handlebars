@@ -1,47 +1,73 @@
-    <nav class="navbar fixed-top navbar-expand-sm navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Lets Scrape some News</a>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12" id="titleDiv">
+            <h1 id="title"> N.Y.Times Scraper</h1>
         </div>
-        <ul class="nav navbar-nav ml-auto">
-            <li><button id="re-scrape" type="button" class="btn btn-success">Scrape New News</button></li>
-        </ul>
-    </nav>
-
-    <div id="wrapper">
-        <h1>News Scraper</h1>
-        <p>{{ greeting }}</p>
-        <div id="articles"></div>
-        <div id="notes"></div>
     </div>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <div class="jumbotron">
-                    <div class="table-grid">
-                        {{#each stories}}
-                        {{> stories/story-item}}
-                        {{/each}}
+    <div class="row" class="linkRow">
+        <div class="col-md-4">
+            <a href="/saved" class="upper-link">Saved Articles</a>
+        </div>
+        <div class="col-md-4">
+            <button class="btn btn-primary" id="scrapeBtn">Scrape</button>
+        </div>
+        <div class="col-md-4">
+            <a href="https://www.nytimes.com" class="upper-link">NYTimes.com</a>
+        </div>
+    </div>
+
+    <hr class="white-underline">
+    <div class="row">
+        {{#each result}}
+        {{#unless saved}}
+        <div class="col-md-6">
+            <div class="article">
+                <h2 class="headline">{{headline}}</h2>
+                <u>
+                    <li class="summary">{{summaryOne}}</li>
+                    <li class="summary">{{summaryTwo}}</li>
+                </u>
+                <hr>
+                <div class="row" id="bottom-row">
+                    <div class="col-md-6">
+                        <a href={{link}} class="link">Read the Entire Story</a>
+                    </div>
+                    <div class="col-md-6">
+                        <form action="/update" method="PUT" id="save-article">
+                        <input type="hidden" name="id" value={{_id}}>
+                        <button class="btn btn-lg" id="saveBtn" type="submit">Save Article</button>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
+        {{/unless}}
+        {{/each}}
     </div>
+</div>
 
-    <div id="empty-comment-text-box-modal" class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">These are news</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>You must type something.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
+<script>
+    $(document).ready(function () {
+        $("#scrapeBtn").on("click", function (event) {
+            event.preventDefault();
+            $.get("/newscrape", function (data) {
+                location.reload();
+            });
+        });
+
+        $("#save-article").on("click", function (event) {
+            event.preventDefault();
+            console.log("save the article");
+            let id = $(this).children().val();
+            console.log(id);
+            let data = {
+                _id: id
+            }
+            $.ajax("/update/" + id, {
+                type: "PUT",
+                data: data
+            })
+            location.reload();
+        });
+    });
+</script>
